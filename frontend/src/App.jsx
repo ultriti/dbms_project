@@ -17,7 +17,8 @@ function App() {
         {/* Login pages */}
         <Route path="/user/login" element={<LoginPages />} />
         <Route path="/user/register" element={<RegisterPage />} />
-        <Route path="/user/logout" element={<RegisterPage />} />
+        <Route path="/user/logout" element={<LoginPages />} />
+        {/* Register pages */}
       </Routes>
     </Router>
 
