@@ -8,17 +8,7 @@ import {
   ChevronRightIcon,
 } from '@heroicons/react/outline';
 
-/**
- * A template for an Instagram‐style social media post
- * Props:
- *  - avatarUrl: URL of the user avatar
- *  - username: display name of the poster
- *  - timestamp: e.g. "13h"
- *  - images: array of image URLs
- *  - likes: number or formatted string of likes
- *  - caption: post caption text
- */
-export default function SocialMediaPost({
+function Hp_posts_tem({
   avatarUrl,
   username,
   timestamp,
@@ -34,7 +24,7 @@ export default function SocialMediaPost({
 
   return (
     <article className="max-w-md mx-auto my-4 bg-white border border-gray-200 rounded-2xl shadow">
-      {/* Header: avatar, username, timestamp */}
+      {/* Header */}
       <header className="flex items-center p-4">
         <img
           src={avatarUrl}
@@ -47,18 +37,17 @@ export default function SocialMediaPost({
         </div>
       </header>
 
-      {/* Image carousel */}
+      {/* Image Carousel */}
       <div className="relative">
         {images.length > 0 && (
           <img
             src={images[current]}
             alt={`Post image ${current + 1}`}
-            className="w-full h-auto object-cover rounded-b-none"
+            className="w-full h-auto object-cover"
           />
         )}
-        {/* Carousel controls */}
         {total > 1 && (
-          <>  
+          <>
             <button
               onClick={prev}
               aria-label="Previous image"
@@ -77,7 +66,7 @@ export default function SocialMediaPost({
         )}
       </div>
 
-      {/* Actions & caption */}
+      {/* Actions & Caption */}
       <div className="p-4">
         <div className="flex items-center space-x-4 mb-2">
           <button aria-label="Like post" className="focus:outline-none">
@@ -95,6 +84,7 @@ export default function SocialMediaPost({
             </button>
           </div>
         </div>
+
         <div className="font-semibold mb-2">{likes} likes</div>
         <p className="text-gray-800 text-sm">
           <span className="font-semibold mr-1">{username}</span>
@@ -105,29 +95,4 @@ export default function SocialMediaPost({
   );
 }
 
-/*
-Usage example (in App.js):
-
-import React from 'react';
-import SocialMediaPost from './SocialMediaPost';
-
-function App() {
-  return (
-    <SocialMediaPost
-      avatarUrl="https://example.com/avatar.jpg"
-      username="wwwchesscom & magnus_carlsen"
-      timestamp="13h"
-      images={[
-        '/images/slide1.jpg',
-        '/images/slide2.jpg',
-        '/images/slide3.jpg',
-      ]}
-      likes="8,842"
-      caption="Go.chess.com/magnus #RevengeDrop"
-    />
-  );
-}
-
-export default App;
-*/
-
+export default Hp_posts_tem;
