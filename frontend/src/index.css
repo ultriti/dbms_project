@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+.side_bar_frame{
+    height: 100%;
+    width: 5vw;
+    background-color: #fff;
+    position: fixed;
+}
+
+.navbar_frame{
+    height: 5vw;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}

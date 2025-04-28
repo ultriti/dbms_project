@@ -111,7 +111,7 @@ module.exports.getUserProfile = (req, res) => {
 
     const token = req.cookies.token;
     
-    const decode = jwt.verify(token,"secret")
+    const decode = jwt.verify(token,"secret");
 
     const sql = `SELECT * FROM users where email =?`;
     const values = [decode.email];
@@ -121,13 +121,13 @@ module.exports.getUserProfile = (req, res) => {
             console.log(results[0]);
             if(results){
                 console.log("user profile",results[0]);
-                res.status(200).json({message:"user profile",user:results[0]})
+                res.status(200).json({message:"user profile",user:results[0]});
             }else{
-                res.status(200).json({message:"user profile",user:results[0]})
+                res.status(400).json({message:"user nor found",user:results[0]});
             }
         })
     } catch (error) {
-     res.status(500).json({message:"internal server error"})
+     res.status(500).json({message:"internal server error"});
     }
 }
 
