@@ -5,7 +5,7 @@ const HomePages = () => {
   
 
   return (
-    <div>
+    <div >
       <h1>hey</h1>
     </div>
   )

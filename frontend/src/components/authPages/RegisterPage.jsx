@@ -19,7 +19,7 @@ const RegisterPage = () => {
             password:password
         }
         
-        const send_register_data = await axios.post(`${import.meta.env.VITE_BASE_UTL}/api/user/register`,register_data , {withCredentials:true})
+        const send_register_data = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/user/register`,register_data , {withCredentials:true})
         console.log('',send_register_data.status);
         
         if(send_register_data.status===200){
@@ -27,6 +27,8 @@ const RegisterPage = () => {
             nav("/")
         }else{
             alert("Register Failed")
+            nav("/user/register")
+
         }
 
 
@@ -94,7 +96,7 @@ const RegisterPage = () => {
                         </button>
                     </form>
                     <p className="text-gray-600 text-sm mt-4">
-                        Already have an account? <a href="#" className="text-purple-500 hover:underline">Login</a>
+                        Already have an account? <a href="/user/login" className="text-purple-500 hover:underline">Login</a>
                     </p>
                 </div>
 
