@@ -1,9 +1,13 @@
 import React from 'react'
 
-function HomePages() {
+
+const HomePages = () => {
+
+  
+
   return (
     <div>
-      <
+      <h1>hey</h1>
     </div>
   )
 }
