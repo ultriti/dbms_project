@@ -14,7 +14,7 @@ const RegisterPage = () => {
         e.preventDefault()
         console.log('data');
         const register_data={
-            name : name,
+            username : name,
             email:email,
             password:password
         }
@@ -61,7 +61,7 @@ const RegisterPage = () => {
                         </div>
                         {/* Password Input */}
                         <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                            <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="password">
                                 email
                             </label>
                             <input
@@ -75,7 +75,7 @@ const RegisterPage = () => {
                         </div>
                         {/* Confirm Password Input */}
                         <div className="mb-6">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirm-password">
+                            <label className="block text-gray-300 text-sm font-bold mb-2" htmlFor="confirm-password">
                                 Confirm Password
                             </label>
                             <input

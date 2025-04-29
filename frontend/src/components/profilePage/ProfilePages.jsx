@@ -6,6 +6,7 @@ import axios from 'axios';
 const ProfilePage = () => {
   const [userDetails, setuserDetails] = useState({})
   const [userAuthor, setuserAuthor] = useState(true)
+  const [userPostsDetails, setuserPostsDetails] = useState([])
 
   const getUserProfilefun = async () => {
     const getuserdataAxios = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/user/getUser`, { withCredentials: true })
@@ -23,16 +24,32 @@ const ProfilePage = () => {
 
   }
 
+  const getUserPosts = async () => {
+    const getuserdataAxios = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/posts/getUserPosts`, { withCredentials: true })
+
+    console.log(getuserdataAxios.status, "user posts", getuserdataAxios.data.userPosts);
+
+    if (getuserdataAxios.status == 200) {
+      console.log(getuserdataAxios.data.userPosts);
+      setuserPostsDetails(getuserdataAxios.data.userPosts)
+
+
+    } else {
+      alert(getuserdataAxios.data.message)
+    }
+  }
+
   useEffect(() => {
 
     getUserProfilefun()
+    getUserPosts()
 
   }, [])
 
 
 
   return (
-    <div className="profile_page_frame h-[100vh] w-[100vw] ">
+    <div className="profile_page_frame min-h-[120vh] w-[100vw] bg-gray-800 ">
 
       <div className="navbar_frame">
         <Navbar />
@@ -48,13 +65,13 @@ const ProfilePage = () => {
           <Sidebar />
         </div>
 
-        <div className="profile_page_main_cont min-h-[100vh] w-full ml-[5vw] flex flex-col p-[2vw]">
+        <div className="profile_page_main_cont min-h-[150vh] w-full ml-[5vw] bg-gray-800 flex flex-col p-[2vw]">
 
 
 
 
           {/* Profile Header */}
-          <div className="flex items-center space-x-6 min-h-[20vh] w-full bg-white p-4 rounded-lg shadow-md">
+          <div className="flex items-center space-x-6 min-h-[20vh] w-full bg-gray-600  p-4 rounded-lg shadow-md">
             <img
               src={userDetails.profile_pic_url}
               alt="Profile Avatar"
@@ -84,49 +101,37 @@ const ProfilePage = () => {
           </div>
 
           {/* Stats Section */}
-          <div className="mt-4 flex justify-evenly bg-white p-4 rounded-lg shadow-md">
+          <div className="min-h-[10vh] w-full mt-4 flex justify-evenly bg-gray-600  p-4 rounded-lg shadow-md">
             <div className="text-center">
-              <p className="font-bold text-lg">215</p>
+              <p className="font-bold text-lg">0</p>
               <p className="text-gray-500">Posts</p>
             </div>
             <div className="text-center">
-              <p className="font-bold text-lg">80.4k</p>
+              <p className="font-bold text-lg">0</p>
               <p className="text-gray-500">Followers</p>
             </div>
             <div className="text-center">
-              <p className="font-bold text-lg">89</p>
+              <p className="font-bold text-lg">0</p>
               <p className="text-gray-500">Following</p>
             </div>
           </div>
 
-          {/* Highlights Section */}
-          <div className="mt-4 flex justify-evenly bg-white p-4 rounded-lg shadow-md">
-            <div className="text-center">
-              <div className="bg-gray-200 rounded-full w-16 h-16 flex items-center justify-center">
-                <p>Local</p>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-200 rounded-full w-16 h-16 flex items-center justify-center">
-                <p>Gallery</p>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-200 rounded-full w-16 h-16 flex items-center justify-center">
-                <p>Preserve</p>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="bg-gray-200 rounded-full w-16 h-16 flex items-center justify-center">
-                <p>Gear</p>
-              </div>
-            </div>
-          </div>
+
 
           {/* Posts Grid */}
-          <div className="mt-4 grid grid-cols-3 gap-4">
-            <img src="demo" alt="Post 1" className="w-full h-32 object-cover rounded-md" />
-            <img src="demo" alt="Post 2" className="w-full h-32 object-cover rounded-md" />
+          <div className="min-h-[90vh] grid grid-cols-3 gap-4 p-20">
+
+            {
+              userPostsDetails.map((post, index) => (
+                // return (
+                <div key={index} className="bg-gray-400 rounded-lg shadow-md p-1 overflow-hidden">
+                  <img src={post.image_url} alt="Post Image" className="w-full h-64 object-contain rounded-lg" />
+                  
+                </div>
+                // )
+              ))
+            }
+
           </div>
         </div>
       </div>

@@ -49,7 +49,7 @@ const LoginPage = () => {
           <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
           <form onSubmit={login_handle}>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="email">
+              <label className="block text-gray-300 mb-2" htmlFor="email">
                 Email
               </label>
               <input
@@ -57,12 +57,12 @@ const LoginPage = () => {
                 id="email"
                 value={email}
                 onChange={(e) => { setemail(e.target.value) }}
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring text-gray-300 focus:border-blue-500"
                 placeholder="Enter your email"
               />
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="password">
+              <label className="block text-gray-200 mb-2" htmlFor="password">
                 Password
               </label>
               <input
@@ -70,7 +70,7 @@ const LoginPage = () => {
                 id="password"
                 value={password}
                 onChange={(e) => { setpassword(e.target.value) }}
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
+                className="w-full px-3 py-2 border rounded focus:outline-none text-gray-300 focus:ring focus:border-blue-500"
                 placeholder="Enter your password"
               />
             </div>
@@ -80,7 +80,12 @@ const LoginPage = () => {
             >
               Login
             </button>
+
+
           </form>
+          <p className="text-gray-300 text-sm mt-4">
+            accound havent created ? <a href="/user/register" className="text-purple-500 hover:underline">register</a>
+          </p>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
 
@@ -46,19 +46,40 @@ module.exports.RegisterUser = (req, res) => {
                 bcrypt.hash(password, salt, (err, hashedPassword) => {
                     if (err) throw err;
 
+                    // ------> -------------------------------
+
                     const sql = `INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)`;
                     const values = [username, email, hashedPassword];
+
                     connection.query(sql, values, (err, results) => {
                         if (err) {
                             console.error("Error inserting user:", err);
                             return res.status(500).send("Error registering user.");
                         }
 
-                        console.log("User created successfully.");
-                        const token = jwt.sign({ email }, "secret");
-                        res.cookie("token", token);
+                        
+                        const sql = `SELECT * FROM users where email =?`;
+                        const values = [email];
+                        
+                        try {
+                            connection.query(sql, values, (err, results, fields) => {
+                                if (err) throw err;
+                                console.log(results[0]);
+                                if (results) {
+                                    console.log("User created successfully.", results[0]);
+                                    const token = jwt.sign({ email,user_id: results[0].user_id }, "secret");
+                                    res.cookie("token", token);
 
-                        res.status(200).json({ message: "user registred", user: results })
+                                    res.status(200).json({ message: "user registred", user: results })
+                                } else {
+                                    res.status(400).json({ message: "user nor found", user: results[0] });
+                                }
+                            })
+                        } catch (error) {
+                            res.status(500).json({ message: "internal server error" });
+                        }
+
+
 
 
                     });
@@ -68,6 +89,8 @@ module.exports.RegisterUser = (req, res) => {
     });
 
 }
+
+
 
 module.exports.LoginUser = (req, res) => {
     const { password, email } = req.body;
@@ -85,13 +108,15 @@ module.exports.LoginUser = (req, res) => {
         }
         const hashedResult = results[0].password_hash;
         console.log("------------->", hashedResult);
+        console.log("-========================>", results[0].user_id);
 
         bcrypt.compare(password, hashedResult, (err, isMatch) => {
             if (isMatch) {
-                console.log("Login successful");
-                const token = jwt.sign({ email:email }, "secret");
-                console.log("------------------------------------------------------->",token)
-                res.cookie("token", token,{
+                const token = jwt.sign({ email: email,user_id: results[0].user_id  }, "secret");
+
+                // ------------------------------------------------------------>>>>>>>
+                console.log("------------------------------------------------------->", token)
+                res.cookie("token", token, {
                     httpOnly: true,
                     expires: new Date(Date.now() + 3600000 * 24 * 30) // 30 days
                 });
@@ -110,8 +135,8 @@ module.exports.LoginUser = (req, res) => {
 module.exports.getUserProfile = (req, res) => {
 
     const token = req.cookies.token;
-    
-    const decode = jwt.verify(token,"secret");
+
+    const decode = jwt.verify(token, "secret");
 
     const sql = `SELECT * FROM users where email =?`;
     const values = [decode.email];
@@ -119,15 +144,45 @@ module.exports.getUserProfile = (req, res) => {
         connection.query(sql, values, (err, results, fields) => {
             if (err) throw err;
             console.log(results[0]);
-            if(results){
-                console.log("user profile",results[0]);
-                res.status(200).json({message:"user profile",user:results[0]});
-            }else{
-                res.status(400).json({message:"user nor found",user:results[0]});
+            if (results) {
+                console.log("user profile", results[0]);
+                res.status(200).json({ message: "user profile", user: results[0] });
+            } else {
+                res.status(400).json({ message: "user nor found", user: results[0] });
             }
         })
     } catch (error) {
-     res.status(500).json({message:"internal server error"});
+        res.status(500).json({ message: "internal server error" });
+    }
+}
+
+
+module.exports.editUserProfile = (req, res) => {
+
+    const token = req.cookies.token;
+
+    const decode = jwt.verify(token, "secret");
+
+    const { description, username } = req.body;
+
+    console.log('--------->', description);
+
+
+    // const sql = `SELECT * FROM users where email =?`;
+    const sql = `UPDATE users SET description = ? WHERE email = ?`;
+    const values = [description, decode.email];
+    try {
+        connection.query(sql, values, (err, results, fields) => {
+            if (err) throw err;
+            if (results) {
+                console.log("user profile", results[0]);
+                res.status(200).json({ message: "user modified" });
+            } else {
+                res.status(400).json({ message: "user nor found", user: results[0] });
+            }
+        })
+    } catch (error) {
+        res.status(500).json({ message: "internal server error" });
     }
 }
 

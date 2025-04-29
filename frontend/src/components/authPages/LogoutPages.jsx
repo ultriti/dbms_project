@@ -8,7 +8,7 @@ function LogoutPages() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('username');
     // Redirect to login page
-    navigate('/login');
+    navigate('/user/login');
   };
 
   const handleCancel = () => {
@@ -39,4 +39,4 @@ function LogoutPages() {
   )
 }
 
-export default LogoutPages
+export default LogoutPages;

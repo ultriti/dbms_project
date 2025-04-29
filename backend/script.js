@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const user = require('./routes/user.routes')
+const post = require('./routes/post.routes')
 const cors = require('cors')
 const mysql = require('mysql2');
 const cookieParser = require("cookie-parser") 
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 
 app.use("/api/user/", user)
+app.use("/api/posts/", post)
 
 app.listen(3000, () => {
   console.log('server is running on port 3000')
