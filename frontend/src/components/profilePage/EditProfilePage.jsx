@@ -1,18 +1,44 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserContext, { userDataContext } from '../contexts/userContext';
+import axios from 'axios';
 
 const EditProfilePage = () => {
+  const mav = useNavigate()
+  const { toggleEditFrame, toggleEditFrameFun } = useContext(userDataContext);
+
+
+
+
   const [description, setDescription] = useState('');
   const [profilePicId, setProfilePicId] = useState('jdjq0nm0vz4ypsqugp2t');
   const [profilePicUrl, setProfilePicUrl] = useState('https://res.cloudinary.com/dqifawygq/image/upload/v1745850833/jdjq0nm0vz4ypsqugp2t.png');
   const [username, setUsername] = useState('');
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Logic to save the updated profile data
     console.log({ description, profilePicId, profilePicUrl, username });
+    const send_editData = {
+      description, profilePicId, profilePicUrl, username
+    }
+    const editUserDataAxios = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/user/getUser`, send_editData, { withCredentials: true })
+
+    if(editUserDataAxios.status == 200){
+      alert(editUserDataAxios.data.message)
+      toggleEditFrameFun()
+      window.location.reload()
+    }else{
+      alert(editUserDataAxios.data.message)
+    }
+
+
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 bg-gray-100 rounded-lg shadow-lg">
+    <div className="h-[60vh] w-[50vw] mt-10 p-0 bg-gray-100 overflow-hidden rounded-lg shadow-lg">
+      <div className="exit_frame h-[4vh] w-full bg-black flex justify-right">
+          <button onClick={()=>{toggleEditFrameFun()}} className='bg-red-600 p-1 px-2'>X</button>
+      </div>
       <h2 className="text-2xl font-bold text-gray-700 mb-6">Edit Profile</h2>
 
       {/* Description */}
@@ -27,7 +53,7 @@ const EditProfilePage = () => {
         />
       </div>
 
-     
+
 
       {/* Profile Picture URL */}
       <div className="mb-4">

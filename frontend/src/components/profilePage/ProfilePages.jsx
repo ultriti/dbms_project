@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Navbar from '../common pages/Navbar_frame';
 import Sidebar from '../common pages/Sidebar';
 import axios from 'axios';
+import EditProfilePage from './EditProfilePage';
+import UserContext, { userDataContext } from '../contexts/userContext';
+import "./ProfilePage.css"
 
 const ProfilePage = () => {
+  const { toggleEditFrame,toggleEditFrameFun } = useContext(userDataContext);
+
   const [userDetails, setuserDetails] = useState({})
   const [userAuthor, setuserAuthor] = useState(true)
   const [userPostsDetails, setuserPostsDetails] = useState([])
@@ -46,10 +51,30 @@ const ProfilePage = () => {
 
   }, [])
 
+  // toggle edit fintions
+  const toggleEditFramehandle = ()=>{
+    console.log('-->',toggleEditFrame);
+    
+    toggleEditFrameFun()
+    console.log('toggle edit frame function called');
+    
+
+  }
+
 
 
   return (
     <div className="profile_page_frame min-h-[120vh] w-[100vw] bg-gray-800 ">
+
+      {
+        toggleEditFrame?(
+          <div className="edit_template_frame fixed h-full w-full  flex items-center justify-center">
+          <EditProfilePage/>
+  
+        </div>
+        ):<></>
+      }
+     
 
       <div className="navbar_frame">
         <Navbar />
@@ -78,8 +103,8 @@ const ProfilePage = () => {
               className="rounded-full w-24 h-24"
             />
             <div>
-              <h2 className="text-2xl font-bold">{userDetails.username}</h2>
-              <p className="text-gray-500">
+              <h2 className="text-2xl text-white font-bold">{userDetails.username}</h2>
+              <p className="text-gray-300">
                 {
                   userDetails.description ? (
                     userDetails.description
@@ -89,9 +114,8 @@ const ProfilePage = () => {
               </p>
               {
                 userAuthor ? (
-                  <a href="/user/editProfile">
-                    <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded">edit</button>
-                  </a>
+                    <button onClick={()=>{toggleEditFramehandle()}} className="mt-2 cursor-pointer bg-blue-500 text-white px-4 py-1 rounded">edit</button>
+                
 
                 ) : (
                   <button className="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Follow</button>
@@ -103,15 +127,15 @@ const ProfilePage = () => {
           {/* Stats Section */}
           <div className="min-h-[10vh] w-full mt-4 flex justify-evenly bg-gray-600  p-4 rounded-lg shadow-md">
             <div className="text-center">
-              <p className="font-bold text-lg">0</p>
+              <p className="font-bold text-lg text-white">0</p>
               <p className="text-gray-500">Posts</p>
             </div>
             <div className="text-center">
-              <p className="font-bold text-lg">0</p>
+              <p className="font-bold text-lg text-white">0</p>
               <p className="text-gray-500">Followers</p>
             </div>
             <div className="text-center">
-              <p className="font-bold text-lg">0</p>
+              <p className="font-bold text-lg text-white">0</p>
               <p className="text-gray-500">Following</p>
             </div>
           </div>
@@ -124,8 +148,8 @@ const ProfilePage = () => {
             {
               userPostsDetails.map((post, index) => (
                 // return (
-                <div key={index} className="bg-gray-400 rounded-lg shadow-md p-1 overflow-hidden">
-                  <img src={post.image_url} alt="Post Image" className="w-full h-64 object-contain rounded-lg" />
+                <div key={index} className="bg-gray-600 rounded-lg shadow-md p-1 overflow-hidden">
+                  <img src={post.image_url} alt="Post Image" className="w-full h-64 object-cover rounded-lg" />
                   
                 </div>
                 // )

@@ -8,6 +8,8 @@ import RegisterPage from './components/authPages/RegisterPage'
 import ProfilePage from './components/profilePage/ProfilePages'
 import EditProfilePage from './components/profilePage/EditProfilePage'
 import CreatePostPage from './components/Posts/CreatePostPage'
+import UserContext from './components/contexts/userContext'
+import About from './components/About page/About_page'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,7 +20,8 @@ function App() {
       <Routes>
         {/* user pages */}
         <Route path="/" element={<HomePages />} />
-        <Route path="/user/profile" element={<ProfilePage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/user/profile" element={<UserContext><ProfilePage /></UserContext>} />
 
         {/* modify */}
         <Route path="/user/editProfile" element={<EditProfilePage />} />

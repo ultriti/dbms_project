@@ -10,14 +10,14 @@ const Navbar = () => {
         {/* Links */}
         <ul className="hidden md:flex space-x-4">
           <li>
-            <a href="#" className="text-white hover:text-gray-300">Home</a>
+            <a href="/" className="text-white hover:text-gray-300">Home</a>
           </li>
           <li>
-            <a href="#" className="text-white hover:text-gray-300">About</a>
+            <a href="/about" className="text-white hover:text-gray-300">About</a>
           </li>
-          <li>
+          {/* <li>
             <a href="#" className="text-white hover:text-gray-300">Services</a>
-          </li>
+          </li> */}
           <li>
             <a href="/user/register" className="text-white hover:text-gray-300">sign up</a>
           </li>

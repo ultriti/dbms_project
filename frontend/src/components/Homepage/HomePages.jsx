@@ -23,6 +23,10 @@ const HomePages = () => {
 
   }
 
+  const fetchSuggestedUser = ()=>{
+    
+  }
+
   useEffect(() => {
     fetchAllPosts()
   }, [])

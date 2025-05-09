@@ -75,19 +75,19 @@ const CreatePostPage = () => {
   };
 
   return (
-    <div className="create_post_frame h-[100vh] flex flex-col bg-gray-500 ">
+    <div className="create_post_frame min-h-[100vh] flex flex-col bg-gray-800 ">
       <div className="navbar_frame">
         <Navbar />
       </div>
 
-      <div className="create_post_cont flex flex-row min-h-[70vh] w-full mt-15">
+      <div className="create_post_cont flex flex-row items-center justify-center min-h-[70vh] w-full mt-5 p-5">
         {/* Sidebar */}
-        <div className="side_bar_frame flex flex-col">
+        <div className="side_bar_frame flex flex-col fixed top-15 left-0">
           <Sidebar />
         </div>
 
         {/* Main Content */}
-        <div className="max-w-xl mx-auto mt-15 p-6 bg-gray-100 rounded-lg shadow-lg">
+        <div className="min-h-[80vh] w-[100%] ml-[6vw] mt-15 p-6 bg-gray-400 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold text-gray-700 mb-6">Create a New Post</h2>
 
           {/* Content Field */}
@@ -111,7 +111,7 @@ const CreatePostPage = () => {
               type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"
+              className="w-full object-contain px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"
             />
           </div>
 

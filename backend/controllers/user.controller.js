@@ -157,6 +157,7 @@ module.exports.getUserProfile = (req, res) => {
 }
 
 
+
 module.exports.editUserProfile = (req, res) => {
 
     const token = req.cookies.token;
@@ -165,12 +166,10 @@ module.exports.editUserProfile = (req, res) => {
 
     const { description, username } = req.body;
 
-    console.log('--------->', description);
-
 
     // const sql = `SELECT * FROM users where email =?`;
-    const sql = `UPDATE users SET description = ? WHERE email = ?`;
-    const values = [description, decode.email];
+    const sql = `UPDATE users SET description = ?  WHERE email = ?`;
+    const values = [description,decode.email];
     try {
         connection.query(sql, values, (err, results, fields) => {
             if (err) throw err;
@@ -186,6 +185,31 @@ module.exports.editUserProfile = (req, res) => {
     }
 }
 
+
+module.exports.getUsersuggestion = (req,res)=>{
+    const token = req.cookies.token;
+
+    const decode = jwt.verify(token, "secret");
+
+    const sql = `SELECT * FROM users`;
+    const values = [decode.email];
+
+    try {
+        connection.query(sql, values, (err, results, fields) => {
+            if (err) throw err;
+            console.log(results[0]);
+            if (results) {
+                console.log("user all user", results);
+                res.status(200).json({ message: "user profile", userSugg: results });
+            } else {
+                res.status(400).json({ message: "user nor found"});
+            }
+        })
+    } catch (error) {
+        res.status(500).json({ message: "internal server error" });
+    }
+
+}
 
 
 
