@@ -22,6 +22,7 @@ function App() {
         <Route path="/" element={<HomePages />} />
         <Route path="/about" element={<About />} />
         <Route path="/user/profile" element={<UserContext><ProfilePage /></UserContext>} />
+        <Route path="/user/getuserProfile/:id" element={<UserContext><ProfilePage /></UserContext>} />
 
         {/* modify */}
         <Route path="/user/editProfile" element={<EditProfilePage />} />
